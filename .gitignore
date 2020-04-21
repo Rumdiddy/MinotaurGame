@@ -13,3 +13,4 @@
 #gitignore targets
 #object files and executables
 *.o 
+data
