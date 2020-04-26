@@ -1,3 +1,10 @@
+#Samuel Jin
+#sjin16
+#Ajay Ananthakrishnan
+#ajayananth1
+#Noah Hayden
+#haydenn1
+
 # Reference Makefile. You are welcome to use this for your project.
 # You may modify it, but make sure that, at a minimum, the following
 # targets all build correctly and work:

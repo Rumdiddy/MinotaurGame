@@ -1,3 +1,11 @@
+//Samuel Jin
+//sjin16
+//Ajay Ananthakrishnan
+//ajayananth1
+//Noah Hayden
+//haydenn1
+
+
 #ifndef ASTARCHASEHERO_H
 #define ASTARCHASEHERO_H
 
