@@ -1,3 +1,10 @@
+//Samuel Jin
+//sjin16
+//Ajay Ananthakrishnan
+//ajayananth1
+//Noah Hayden
+//haydenn1
+
 #ifndef MYSTERYCONTROLLER_H
 #define MYSTERYCONTROLLER_H
 

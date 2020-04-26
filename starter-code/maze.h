@@ -1,3 +1,10 @@
+//Samuel Jin
+//sjin16
+//Ajay Ananthakrishnan
+//ajayananth1
+//Noah Hayden
+//haydenn1
+
 #ifndef MAZE_H
 #define MAZE_H
 
