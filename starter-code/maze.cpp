@@ -58,6 +58,25 @@ const Tile Maze::*getTile(const Position & pos) const {
 // Read a description of Maze from specified istream and return it.
 static Maze Maze::*read(std::istream &in) {
   //TO DO
+  in >> mwidth; in >> mheight;
+  Maze* newMaze = new Maze(width, height);
+  //reading in maze tiles and copying to the maze vector of tiles
+  int count = 0;
+  char c;
+  while (in >> c) {
+    //check for the type of tile and add accordingly
+    if (c == '#') {
+      //allocate this type of tile in to the array
+    }
+    else if (c == '.') {
 
+    }
+    else if (c == '<') {
+
+    }
+    count++
+  }
+
+  return newMaze;
 }
   
