@@ -7,6 +7,8 @@
 
 #include "maze.h"
 #include "tile.h"
+#include "position.h"
+#include "tilefactory.h"
 
 //Initializes maze with width * height tiles
 Maze::Maze(int width, int height) : mwidth(width), mheight(height) {
@@ -50,31 +52,37 @@ void Maze::setTile(const Position &pos, Tile *tile) {
 }
 
 //Gets tile at specified position
-const Tile Maze::*getTile(const Position & pos) const {
+const Tile* Maze::getTile(const Position & pos) const {
   int p = pos.getX() + pos.getY() * mwidth;
   return mazeVec[p];
 }
 
 // Read a description of Maze from specified istream and return it.
-static Maze Maze::*read(std::istream &in) {
+Maze* Maze::read(std::istream &in) {
   //TO DO
-  in >> mwidth; in >> mheight;
+  int width; int height;
+  in >> width; in >> height;
   Maze* newMaze = new Maze(width, height);
   //reading in maze tiles and copying to the maze vector of tiles
   int count = 0;
   char c;
+  TileFactory* factory = TileFactory::getInstance();
   while (in >> c) {
     //check for the type of tile and add accordingly
     if (c == '#') {
       //allocate this type of tile in to the array
+      Tile* insert = factory->TileFactory::createFromChar(c);
+      mazeVec.push_back(insert);
     }
     else if (c == '.') {
-
+      Tile* insert = factory->TileFactory::createFromChar(c);
+      mazeVec.push_back(insert);
     }
     else if (c == '<') {
-
+      Tile* insert = factory->TileFactory::createFromChar(c);
+      mazeVec.push_back(insert);
     }
-    count++
+    count++;
   }
 
   return newMaze;

@@ -22,8 +22,8 @@ private:
   int mwidth;
   int mheight;
   std::vector<Tile*> mazeVec;
-  
-  // disallow copy ctor and assignment operator
+   
+ // disallow copy ctor and assignment operator
   Maze(const Maze &);
   Maze &operator=(const Maze &);
 
@@ -49,7 +49,7 @@ public:
   const Tile *getTile(const Position &pos) const;
 
   // Read a description of a Maze from specified istream, and return it.
-  static Maze *read(std::istream &in);
+  Maze *read(std::istream &in);
 
 private:
   // Add your own private member functions
