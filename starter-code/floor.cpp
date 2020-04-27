@@ -18,7 +18,7 @@ virtual MoveResult Floor::checkMoveOnto(Entity * entity, const Position &fromPos
 
 //returns false, because this is not the goal
 virtual bool Floor::isGoal() const {
-  return 1;
+  return (void)MoveResult::BLOCK;
 }
 
 //. represents a floor space
