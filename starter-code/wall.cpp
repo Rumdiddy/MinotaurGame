@@ -19,7 +19,7 @@ Wall:~Wall() {
 
 //Returns BLOCKED 
 virtual MoveResult Wall:checkMoveOnto(Entity * entity, const Position &fromPos, const Position &tilePos) const {
-  return 1;
+  return (void)MoveResult::BLOCK;
 }
 
 //Returns false because not the goal

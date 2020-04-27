@@ -1,9 +1,9 @@
 //Samuel Jin
 //sjin16
 //Ajay Ananthakrishnan
-//ajayananth1
+//aananth3
 //Noah Hayden
-//haydenn1
+//nhayden2
 
 #ifndef MAZE_H
 #define MAZE_H
@@ -18,8 +18,11 @@ class Position;
 // A Maze is a grid of Tile objects.
 class Maze {
 private:
-  // TODO: add fields
+  // Fields
+  int mwidth;
 
+  int mheight;
+  
   // disallow copy ctor and assignment operator
   Maze(const Maze &);
   Maze &operator=(const Maze &);
