@@ -10,24 +10,24 @@
 using std::string;
 
 //Default constructor
-Wall:Wall() {
+Wall::Wall() {
 }
 
 //Destructor
-Wall:~Wall() {
+Wall::~Wall() {
 }
 
 //Returns BLOCKED 
-virtual MoveResult Wall:checkMoveOnto(Entity * entity, const Position &fromPos, const Position &tilePos) const {
-  return (void)MoveResult::BLOCK;
+MoveResult Wall::checkMoveOnto(Entity * entity, const Position &fromPos, const Position &tilePos) const {
+  return MoveResult::BLOCK;
 }
 
 //Returns false because not the goal
-virtual bool Wall:isGoal() const {
+bool Wall::isGoal() const {
   return 0;
 }
 
 //Walls are denoted by "#"
-virtual string getGlyph() const {
+string Wall::getGlyph() const {
   return "#";
 }

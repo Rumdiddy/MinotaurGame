@@ -12,16 +12,16 @@ Floor::Floor() {}
 Floor::~Floor() {}
 
 //returns ALLOW, because any entity can move onto a floor tile
-virtual MoveResult Floor::checkMoveOnto(Entity * entity, const Position &fromPos, const Position &tilePos) const {
-  return 0;
+MoveResult Floor::checkMoveOnto(Entity * entity, const Position &fromPos, const Position &tilePos) const {
+  return MoveResult::ALLOW;
 }
 
 //returns false, because this is not the goal
-virtual bool Floor::isGoal() const {
-  return (void)MoveResult::BLOCK;
+bool Floor::isGoal() const {
+  return false;
 }
 
 //. represents a floor space
-virtual string Floor::getGlyph() {
+std::string Floor::getGlyph() const {
   return ".";
 }
