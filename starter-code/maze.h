@@ -49,7 +49,7 @@ public:
   const Tile *getTile(const Position &pos) const;
 
   // Read a description of a Maze from specified istream, and return it.
-  Maze *read(std::istream &in);
+  static Maze *read(std::istream &in);
 
 private:
   // Add your own private member functions

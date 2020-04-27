@@ -72,15 +72,15 @@ Maze* Maze::read(std::istream &in) {
     if (c == '#') {
       //allocate this type of tile in to the array
       Tile* insert = factory->TileFactory::createFromChar(c);
-      mazeVec.push_back(insert);
+      newMaze->mazeVec.push_back(insert);
     }
     else if (c == '.') {
       Tile* insert = factory->TileFactory::createFromChar(c);
-      mazeVec.push_back(insert);
+      newMaze->mazeVec.push_back(insert);
     }
     else if (c == '<') {
       Tile* insert = factory->TileFactory::createFromChar(c);
-      mazeVec.push_back(insert);
+      newMaze->mazeVec.push_back(insert);
     }
     count++;
   }
