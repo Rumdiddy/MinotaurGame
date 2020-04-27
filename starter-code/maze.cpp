@@ -6,12 +6,12 @@
 //nhayden2
 
 #include "maze.h"
+#include "tile.h"
 
 //Initializes maze with width * height tiles
-Maze::Maze(int width, int height) {
-  mwidth = width;
-  mheight = height;  
-
+Maze::Maze(int width, int height) : mwidth(width), mheight(height) {
+  std::vector<Tile*> array;
+  mazeVec = array; 
   //TO DO: set tiles?
   
 }
@@ -37,20 +37,22 @@ int Maze::getHeight() const {
 
 //Return true if position is in bounds (width and height)
 bool Maze::inBounds(const Position &pos) const {
-  //TO DO
-
+  if (pos.getX() >= mwidth || pos.getY() >= mheight) {
+    return false;
+  }
+  return true;
 }
 
 //Sets Tile at position. Maze must delete later
 void Maze::setTile(const Position &pos, Tile *tile) {
-  //TO DO
-  
+  int p = pos.getX() + pos.getY() * mwidth;
+  mazeVec[p] = tile; 
 }
 
 //Gets tile at specified position
 const Tile Maze::*getTile(const Position & pos) const {
-  //TO DO
-
+  int p = pos.getX() + pos.getY() * mwidth;
+  return mazeVec[p];
 }
 
 // Read a description of Maze from specified istream and return it.

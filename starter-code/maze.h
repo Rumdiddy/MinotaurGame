@@ -20,8 +20,8 @@ class Maze {
 private:
   // Fields
   int mwidth;
-
   int mheight;
+  std::vector<Tile*> mazeVec;
   
   // disallow copy ctor and assignment operator
   Maze(const Maze &);
