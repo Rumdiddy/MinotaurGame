@@ -13,15 +13,15 @@ Goal::Goal() {
 Goal::~Goal() {
 }
 
-bool Goal::isGoal() {
+bool Goal::isGoal() const {
   return true; 
 }
 
-virtual MoveResult Goal::checkMoveOnto(Entity *entity, const Position &fromPos, const Position &tilePos) const {
-  reutrn (void)MoveResult::ALLOW;
+MoveResult Goal::checkMoveOnto(Entity *entity, const Position &fromPos, const Position &tilePos) const {
+  return MoveResult::ALLOW;
 }
 
-std::string Goal::getGlyph() {
+std::string Goal::getGlyph() const {
   return "<"; 
 }
 

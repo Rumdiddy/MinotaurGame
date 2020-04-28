@@ -9,6 +9,7 @@
 #include "tile.h"
 #include "position.h"
 #include "tilefactory.h"
+#include <iterator>
 
 //Initializes maze with width * height tiles
 Maze::Maze(int width, int height) : mwidth(width), mheight(height) {
@@ -18,8 +19,8 @@ Maze::Maze(int width, int height) : mwidth(width), mheight(height) {
 Maze::~Maze() {
   mwidth = 0;
   mheight = 0;
-  for(std::vector<Tile*>::iterator i = mazeVec.begin(); i != mazeVec.end; ++i) {
-    delete i;
+  for(int i = 0; i < (mwidth * mheight); ++i) {
+    delete mazeVec[i];
   }
   delete this;
 }
@@ -59,7 +60,7 @@ Maze* Maze::read(std::istream &in) {
   
   int width; int height;
   in >> width; in >> height;
-  this = new Maze(width, height);
+  Maze* nmaze = new Maze(width, height);
 
   //reading in maze tiles and copying to the maze vector of tiles
   int count = 0;
@@ -68,10 +69,10 @@ Maze* Maze::read(std::istream &in) {
 
   while (in >> c) {
     Tile* insert = factory->TileFactory::createFromChar(c);
-    this->mazeVec.push_back(insert);
+    nmaze->mazeVec.push_back(insert);
     count++;
   }
 
-  return this;
+  return nmaze;
 }
   
