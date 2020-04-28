@@ -3,7 +3,7 @@
 //Ajay Ananthakrishnan
 //ajayananth1
 //Noah Hayden
-//haydenn1
+//nhayden2
 
 #ifndef ENTITY_H
 #define ENTITY_H
@@ -18,6 +18,10 @@ class EntityController;
 class Entity {
 private:
   // TODO: add fields
+  Position m_pos;
+  EntityController controller;
+  std::string glyph;
+  std::string properties;
 
   // copy constructor and assignment operator are disallowed
   Entity(const Entity &);
