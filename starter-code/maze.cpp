@@ -12,19 +12,16 @@
 
 //Initializes maze with width * height tiles
 Maze::Maze(int width, int height) : mwidth(width), mheight(height) {
-  std::vector<Tile*> array;
-  mazeVec = array; 
-  //TO DO: set tiles?
-  
 }
 
 //Deletes all tiles and sets width and height to 0
 Maze::~Maze() {
   mwidth = 0;
   mheight = 0;
-
-  //TO DO: clear all tiles
-  
+  for(std::vector<Tile*>::iterator i = mazeVec.begin(); i != mazeVec.end; ++i) {
+    delete i;
+  }
+  delete this;
 }
 
 //Gets width of Maze
@@ -59,32 +56,22 @@ const Tile* Maze::getTile(const Position & pos) const {
 
 // Read a description of Maze from specified istream and return it.
 Maze* Maze::read(std::istream &in) {
-  //TO DO
+  
   int width; int height;
   in >> width; in >> height;
-  Maze* newMaze = new Maze(width, height);
+  this = new Maze(width, height);
+
   //reading in maze tiles and copying to the maze vector of tiles
   int count = 0;
   char c;
   TileFactory* factory = TileFactory::getInstance();
+
   while (in >> c) {
-    //check for the type of tile and add accordingly
-    if (c == '#') {
-      //allocate this type of tile in to the array
-      Tile* insert = factory->TileFactory::createFromChar(c);
-      newMaze->mazeVec.push_back(insert);
-    }
-    else if (c == '.') {
-      Tile* insert = factory->TileFactory::createFromChar(c);
-      newMaze->mazeVec.push_back(insert);
-    }
-    else if (c == '<') {
-      Tile* insert = factory->TileFactory::createFromChar(c);
-      newMaze->mazeVec.push_back(insert);
-    }
+    Tile* insert = factory->TileFactory::createFromChar(c);
+    this->mazeVec.push_back(insert);
     count++;
   }
 
-  return newMaze;
+  return this;
 }
   
