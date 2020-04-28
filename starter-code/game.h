@@ -1,9 +1,9 @@
 //Samuel Jin
 //sjin16
 //Ajay Ananthakrishnan
-//ajayananth1
+//aananth3
 //Noah Hayden
-//haydenn1
+//nhayden2
 
 #ifndef GAME_H
 #define GAME_H
