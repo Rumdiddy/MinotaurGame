@@ -7,7 +7,7 @@
 
 #include "entity.h"
 #include "entitycontroller.h"
-#inclide <string>
+#include <string>
 
 using std::string;
 
@@ -21,23 +21,23 @@ Entity::~Entity() {
 }
 
 void Entity::setGlyph(const std::string &glyph) {
-  glyph = glyph; //should it be this->glyph ? 
+  mglyph = glyph; //should it be this->glyph ? 
 }
 
-void Entity:setProperties(const std::string &props) {
-  properties = props; 
+void Entity::setProperties(const std::string &props) {
+  mproperties = props; 
 }
 
 std::string Entity::getGlyph() const {
-  return glyph; 
+  return mglyph; 
 }
 
-std::string Entity:getProperties() const {
-  return properties; 
+std::string Entity::getProperties() const {
+  return mproperties; 
 }
 
 bool Entity::hasProperty(char prop) const {
-  std::size_t found = properties.find(prop);
+  std::size_t found = mproperties.find(prop);
   if (found == std::string::npos) {
     return false; 
   }
@@ -45,11 +45,11 @@ bool Entity::hasProperty(char prop) const {
 }
 
 void Entity::setController(EntityController *controller) {
-  controller = controller; 
+  mcontroller = controller; 
 }
 
 EntityController* Entity::getController() {
-  return controller; 
+  return mcontroller; 
 }
 
 void Entity::setPosition(const Position &pos) {
