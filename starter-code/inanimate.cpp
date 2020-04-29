@@ -6,6 +6,7 @@
 //nhayden2
 
 #include "inanimate.h"
+#include "position.h"
 
 //STUBS
 Inanimate::Inanimate() {
@@ -15,10 +16,9 @@ Inanimate::~Inanimate() {
 }
 
 Direction Inanimate::getMoveDirection(Game*, Entity*) {
-  Direction * stub = new Direction;
-  return *stub;
+  return Direction::NONE;
 }
 
 bool Inanimate::isUser() const {
-  return true;
+  return false;
 }

@@ -22,7 +22,7 @@ Maze::~Maze() {
   for(int i = 0; i < (mwidth * mheight); ++i) {
     delete mazeVec[i];
   }
-  delete this;
+  //delete this; segmentation fault disappears when this is removed from code
 }
 
 //Gets width of Maze
