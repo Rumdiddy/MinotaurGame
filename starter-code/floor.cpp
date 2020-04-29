@@ -12,7 +12,7 @@ Floor::Floor() {}
 Floor::~Floor() {}
 
 //returns ALLOW, because any entity can move onto a floor tile
-MoveResult Floor::checkMoveOnto(Entity * entity, const Position &fromPos, const Position &tilePos) const {
+MoveResult Floor::checkMoveOnto(Entity *, const Position &, const Position &) const {
   return MoveResult::ALLOW;
 }
 

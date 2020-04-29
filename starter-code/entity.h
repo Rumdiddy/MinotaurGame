@@ -18,8 +18,8 @@ class EntityController;
 class Entity {
 private:
   // TODO: add fields
-  Position m_pos;
-  EntityController controller;
+  Position * m_pos;
+  EntityController * controller;
   std::string glyph;
   std::string properties;
 

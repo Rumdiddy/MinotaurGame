@@ -27,7 +27,10 @@ public:
 
 private:
   // TODO: add fields
-
+  Maze* gmaze;
+  UI* gui;
+  GameRules* grules;
+  
   // disallow copy constructor and assignment operator
   Game(const Game &);
   Game &operator=(const Game &);
