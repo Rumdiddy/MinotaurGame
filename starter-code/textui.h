@@ -14,7 +14,7 @@
 // to cout and reading from cin.
 class TextUI : public UI {
 private:
-  // TODO: add fields
+  std::string m_msg;
 
   // copy constructor and assignment operator disallowed
   TextUI(const TextUI &);
