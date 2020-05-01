@@ -15,8 +15,9 @@ UIControl::~UIControl() {
 }
 
 Direction UIControl::getMoveDirection(Game*, Entity*) {
-  Direction * stub = new Direction;
-  return *stub;
+  UI *ui = UI::getInstance();
+  Direction dir = ui->getMoveDirection();
+  return dir; 
 }
 
 bool UIControl::isUser() const {
