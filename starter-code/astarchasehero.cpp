@@ -7,7 +7,7 @@
 
 #include "astarchasehero.h"
 
-//STUBS
+
 AStarChaseHero::AStarChaseHero() {
 }
 
@@ -15,10 +15,17 @@ AStarChaseHero::~AStarChaseHero() {
 }
 
 Direction AStarChaseHero::getMoveDirection(Game*, Entity*) {
-  Direction * stub = new Direction;
-  return *stub;
+  for(int dirint = UP; dirint != NONE; dirint++) {
+    
+
+
+  }
+
+
+  
 }
 
 bool AStarChaseHero::isUser() const {
   return true;
 }
+
