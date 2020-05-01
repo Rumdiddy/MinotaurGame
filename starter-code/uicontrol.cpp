@@ -6,6 +6,7 @@
 //nhayden2
 
 #include "uicontrol.h"
+#include "ui.h"
 
 //STUBS
 UIControl::UIControl() {

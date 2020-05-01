@@ -6,6 +6,7 @@
 //nhayden2
 
 #include "chasehero.h"
+#include "entity.h"
 #include <iterator>
 
 using std::string;
