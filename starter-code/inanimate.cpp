@@ -8,7 +8,6 @@
 #include "inanimate.h"
 #include "position.h"
 
-//STUBS
 Inanimate::Inanimate() {
 }
 

@@ -1,5 +1,5 @@
 //Samuel Jin
-//sjin16
+0//sjin16
 //Ajay Ananthakrishnan
 //ajayananth1
 //Noah Hayden
@@ -23,6 +23,12 @@ private:
   std::string mglyph;
   std::string mproperties;
 
+  //AStarVariables
+  Position parent_pos;
+  float gCost;
+  float hCost;
+  float fCost;
+    
   // copy constructor and assignment operator are disallowed
   Entity(const Entity &);
   Entity &operator=(const Entity &);
@@ -30,6 +36,24 @@ private:
 public:
   Entity();
   ~Entity();
+
+  //A STAR ALGORITHM
+  
+  //Sets parent position
+  void setPPos(int px, int py);
+
+  //sets/gets hcost
+  void setH();
+  float getH() const;
+  
+  //sets/gets gcost
+  void setG();
+  float getG() const;
+  
+  //sets/gets fcost
+  float getF() const;
+ 
+  //Other Functions:
 
   // Set the glyph that will represent this Entity.
   // Should consist of a single character.
