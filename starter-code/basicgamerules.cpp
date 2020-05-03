@@ -53,12 +53,29 @@ virtual bool allowMove(Game *game, Entity *actor, const Position &source, const 
 
 virtual void enactMove(Game *game, Entity *actor, const Position &dest) const {
 
-  //TODO
-
-  actor -> setPosition(dest); 
-
-  //just changes entity position
-  //and also position of moved tile if applicable
+  Maze* gameMaze = game -> getMaze();
+  
+  Position curPosition = actor -> getPosition(); 
+  
+  //find push direction
+  int moveDir; 
+  for (int dir = UP; dir != NONE; dir++) {
+    if (curPosition.displace(dir) == dest) {
+	moveDir = dir;
+      }
+  }
+  
+  Position adjacPos = curPosition.displace(moveDir); 
+  Entity adjacEnt = game -> getEntityAt(adjacPos);
+  //if there is a moveable entity adjacent, move both entity and that property
+  if (adjacEnt != nullptr) {
+      adjacEnt ->setPosition(adjacPos.displace(moveDir)); 
+      actor -> setPosition(dest); 
+    }
+  //else, just move the actor by 1 unit in the push direction
+  else {
+      actor -> setPosition(dest); 
+    }
 }
 
 virtual GameResult checkGameResult(Game *game) const {
