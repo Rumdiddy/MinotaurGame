@@ -20,7 +20,9 @@ ChaseHero::~ChaseHero() {
 Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
   int lowestdist = -1;
   int lowestdir = -1;
-  Position epos = entity->getPosition()
+  Position epos = entity->getPosition();
+  Maze * gmaze = game->getMaze();
+
   
   //Obtain positions of all heroes
   const vector<Entity*> heroes = game->getEntitiesWithProperty('h');
@@ -33,7 +35,7 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
 
     //Skip direction if not allowed
     const Position dispos = epos.displace(dir);
-    Entity * checkent = game->getEntityAt(dispos);
+    Tile * checkent = gmaze->getTile(dispos);
     const string checkglyph = checkent->getGlyph();
     if (checkglyph == '#') {
       continue;
