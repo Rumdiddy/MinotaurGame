@@ -30,6 +30,7 @@ private:
   Maze* gmaze;
   UI* gui;
   GameRules* grules;
+  EntityVec* gents;
   
   // disallow copy constructor and assignment operator
   Game(const Game &);
