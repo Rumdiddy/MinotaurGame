@@ -21,6 +21,9 @@ AStarChaseHero::~AStarChaseHero() {
 Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
   
   Maze * gmaze = game->getMaze();
+  
+
+  
   const vector<Entity*> heroes = game->getEntitiesWithProperty('h');
   const vector<Position> hpos;
   for(vector<Entity*>::iterator it = heroes.begin(); it != heroes.end(); ++it) {
@@ -47,7 +50,8 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
     float fval;
     bool goalfound = false;
     bool alrexis = false;
-    Tile current = gmaze->getTile(currpos);
+    Tile * current = gmaze->getTile(currpos);
+    current->setpos(currpos);
     vector<Position> openn;
     vector<Position> closen;
     openn.push_back(currpos);
@@ -76,7 +80,8 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
 	
 	if(!alrexis) {
 	  openn.push_back(dispos);
-	  
+
+	  checkent->setpos(dispos);
 	  checkent->setG(startpos);
 	  checkent->setH(hposi);
 	  

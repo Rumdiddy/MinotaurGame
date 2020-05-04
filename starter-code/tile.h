@@ -9,6 +9,7 @@
 #define TILE_H
 
 #include <string>
+#include "position.h"
 
 class Position;
 class Entity;
@@ -24,14 +25,14 @@ enum class MoveResult {
 // how an Entity object can move at that position.
 class Tile {
 private:
-
-   //AStarVariables
+  
+  Position t_pos;
   Position parent_pos;
   Direction parent_dir;
   float gCost;
   float hCost;
   float fCost;
-
+  
   // disallow copy constructor and assignment operator
   Tile(const Tile &);
   Tile &operator=(const Tile &);
@@ -55,7 +56,8 @@ public:
   virtual std::string getGlyph() const = 0;
 
   //A STAR ALGORITHM Components
-
+  void setpos(const Position &pos);
+  
   //Sets parent position
   void setPPos(Direction dir);
   Position getPPos();
@@ -63,14 +65,14 @@ public:
 
   //sets/gets hcost
   void setH(Position chpos);
-  float getH() const;
+  float getH();
 
   //sets/gets gcost
   void setG(Position min_pos);
-  float getG() const;
+  float getG();
 
   //sets/gets fcost
-  float getF() const;
+  float getF();
 };
 
 #endif // TILE_H
