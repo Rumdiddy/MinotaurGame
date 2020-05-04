@@ -42,16 +42,26 @@ void Game::addEntity(Entity* entity) {
 }
 
 //helper function for getEntity at that takes a position and returns the type of entity at that position
+/*
 Entity* Game::decodeEntity(const Tile* pos) {
   
 }
+*/
 
 //get the entity at the specified position
 Entity* Game::getEntityAt(const Position &pos) {
   //access the maze vector and get the type of tile at that position
   //return the entity at the position based on the glyph
   Tile* cur = gmaze->getTile(pos);
-  
+  //search the entities for the entity with the specified position
+  //if not, return that there is no entity
+  std::vector<Entity*>::const_iterator it;
+  for (it = this.gents->cbegin(); it != this.gents->cend(); ++it) {
+    if (it->getPosition() == pos) {
+      return it;
+    }
+  }
+  return NULL;
 }
 
 //get the reference to the reference of pointers to entities
@@ -112,9 +122,43 @@ void Game::gameLoop() {
 // unit tests.  It is mainly intended to be called from
 // the gameLoop member function.
 void Game::takeTurn(Entity* actor) {
+  //getting suggested move
+  Direction mv = actor->getController()->getMoveDirection(this, actor);
   
+  //checking according to game rules
+  Position source = actor->getPosition;
+  Position dest = Position::displace(mv);
+  bool legality = grules->allowMove(this, actor, source, dest);
+  if (legality) {
+    //enact move, otherwise ask for new move
+    grules->enactMove(this, actor, dest);
+  }
+  gui->displayMessage("Illegal Move", false);
+  takeTurn(actor);
 }
 
 static Game* Game::loadGame(std::istream &in) {
-
+  //read in maze
+  Maze* gmaze = new Maze();
+  Game* g = new Game();
+  gmaze = Maze::read(std::istream& in);
+  char c; char entcontroller; char glyph; int x, y;
+  while (in >> c) {
+    glyph = c;
+    in >> entcontroller;
+    while (c != ' ') {
+      in >> prop;
+      props += prop;
+    }
+    in >> x; in >> y;
+    Entity* ent = new Entity();
+    Position pos = new Position(x, y);
+    ent->setPos(pos);
+    ent->setGlyph(glyph);
+    ent->setProperties(props);
+    ent->setController(entcontroller);
+    g->addEntity(ent);
+  }
+  g->setMaze(gmaze);
+  return g;
 }
