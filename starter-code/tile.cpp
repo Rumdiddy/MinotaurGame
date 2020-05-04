@@ -14,39 +14,39 @@ Tile::~Tile() {
 }
 
 //Sets parent position
-void Entity::setPPos(Direction dir) {
+void Tile::setPPos(Direction dir) {
   parent_dir = dir;
   parent_pos = m_pos.displace(dir);
 }
 
-Position Entity::getPPos() {
+Position Tile::getPPos() {
   return parent_pos;
 }
 
-Direction Entity::getPDir() {
+Direction Tile::getPDir() {
   return parent_dir;
 }
 
 //sets/gets hcost (GETS CLOSEST HERO)
-void Entity::setH(Position chpos) {
+void Tile::setH(Position chpos) {
   hCost = m_pos.distanceFrom(ch_pos);
 }
 
-float Entity::getH() const {
+float Tile::getH() const {
   return hCost;
 }
 
 //sets/gets gcost. Pass in minotaur position
-void Entity::setG(Position min_pos) {
+void Tile::setG(Position min_pos) {
   gCost = m_pos.distanceFrom(min_pos);
 }
 
-float Entity::getG() const {
+float Tile::getG() const {
   return gCost;
 }
 
 //sets/gets fcost
-float Entity::getF() const {
+float Tile::getF() const {
   fCost = hCost + gCost;
   return fCost;
 }
