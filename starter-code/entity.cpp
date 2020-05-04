@@ -14,48 +14,12 @@ using std::string;
 
 //constructor and destructor:
 Entity::Entity() {
-  gCost = -1;
-  hCost = -1;
-  fCost = -1;
 }
 
 Entity::~Entity() {
-  delete parent_pos;
   delete m_pos;
   delete mcontroller;
 }
-
-//Sets parent position
-void Entity::setPPos(int px, int py) {
-  parent_pos = Position(px, py);
-}
-
-//sets/gets hcost (GETS CLOSEST HERO)
-void Entity::setH(Position chpos) {
-  hCost = m_pos.distanceFrom(ch_pos);
-}
-
-float Entity::getH() const {
-  return hCost;
-}
-
-//sets/gets gcost. Pass in minotaur position
-void Entity::setG(Position min_pos) {
-  gCost = m_pos.distanceFrom(min_pos);
-}
-
-float Entity::getG() const {
-  return gCost;
-}
-
-//sets/gets fcost
-float Entity::getF() const {
-  fCost = hCost + gCost;
-  return fCost;
-}
-
-//Gets  position
-void getchPos() const;
 
 
 void Entity::setGlyph(const std::string &glyph) {

@@ -24,10 +24,18 @@ enum class MoveResult {
 // how an Entity object can move at that position.
 class Tile {
 private:
+
+   //AStarVariables
+  Position parent_pos;
+  Direction parent_dir;
+  float gCost;
+  float hCost;
+  float fCost;
+
   // disallow copy constructor and assignment operator
   Tile(const Tile &);
   Tile &operator=(const Tile &);
-
+  
 public:
   Tile();
   virtual ~Tile();
@@ -45,6 +53,24 @@ public:
 
   // Get the glyph representing this Tile. Should be a single character.
   virtual std::string getGlyph() const = 0;
+
+  //A STAR ALGORITHM Components
+
+  //Sets parent position
+  void setPPos(Direction dir);
+  Position getPPos();
+  Direction getPDir();
+
+  //sets/gets hcost
+  void setH(Position chpos);
+  float getH() const;
+
+  //sets/gets gcost
+  void setG(Position min_pos);
+  float getG() const;
+
+  //sets/gets fcost
+  float getF() const;
 };
 
 #endif // TILE_H
