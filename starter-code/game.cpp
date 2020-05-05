@@ -32,7 +32,7 @@ void Game::setUI(UI *ui) {
 }
 
 //set the Game rules object
-void game::setGameRules(GameRules *gameRules) {
+void Game::setGameRules(GameRules *gameRules) {
   grules = gameRules;
 }
 
@@ -52,13 +52,12 @@ Entity* Game::decodeEntity(const Tile* pos) {
 Entity* Game::getEntityAt(const Position &pos) {
   //access the maze vector and get the type of tile at that position
   //return the entity at the position based on the glyph
-  Tile* cur = gmaze->getTile(pos);
   //search the entities for the entity with the specified position
   //if not, return that there is no entity
   std::vector<Entity*>::const_iterator it;
-  for (it = this.gents->cbegin(); it != this.gents->cend(); ++it) {
-    if (it->getPosition() == pos) {
-      return it;
+  for (it = this->gents->cbegin(); it != this->gents->cend(); ++it) {
+    if ((*it)->getPosition() == pos) {
+      return *it;
     }
   }
   return NULL;
@@ -72,12 +71,12 @@ const EntityVec& Game::getEntities() const {
 std::vector<Entity *> Game::getEntitiesWithProperty(char prop) const {
   //look for entities with given properties and add to vector:
   std::vector<Entity*> ents;
-  Entity* cur = ents;
-  while (cur != NULL) {
-    if (cur->hasProperty(prop)) {
-      ents.push_back(cur);
+  std::vector<Entity*>::const_iterator it;
+  while (it != ents.cend()) {
+    if ((*it)->hasProperty(prop)) {
+      ents.push_back(*it);
     }
-    cur++;
+    it++;
   }
   return ents;
 }
@@ -100,14 +99,15 @@ GameRules* Game::getGameRules() {
 // an Entity whose EntityController is controlled by the user takes
 // a turn.
 void Game::gameLoop() {
+  EntityVec ents = this->getEntities();
   while (grules->checkGameResult(this) == GameResult::UNKNOWN) {
     //allowing each entity to take a turn
-    for (size_t i = 0; i < EntityVec.size(); i++) {
+    for (size_t i = 0; i < ents.size(); i++) {
       if (grules->checkGameResult(this) == GameResult::UNKNOWN) { 
-	if (EntityVec[i]->getController()->isUser()) {
+	if (ents[i]->getController()->isUser()) {
 	  gui->render(this);
 	}
-	takeTurn(EntityVec[i]);
+	takeTurn(ents[i]);
       }
     }
   }
@@ -126,8 +126,8 @@ void Game::takeTurn(Entity* actor) {
   Direction mv = actor->getController()->getMoveDirection(this, actor);
   
   //checking according to game rules
-  Position source = actor->getPosition;
-  Position dest = Position::displace(mv);
+  Position source = actor->getPosition();
+  Position dest = source.displace(mv);
   bool legality = grules->allowMove(this, actor, source, dest);
   if (legality) {
     //enact move, otherwise ask for new move
@@ -139,10 +139,10 @@ void Game::takeTurn(Entity* actor) {
 
 static Game* Game::loadGame(std::istream &in) {
   //read in maze
-  Maze* gmaze = new Maze();
+  Maze* gmaze = Maze::read(in);
+  if (gmaze == NULL) { return NULL; }
   Game* g = new Game();
-  gmaze = Maze::read(std::istream& in);
-  char c; char entcontroller; char glyph; int x, y;
+  char c; char entcontroller; std::string glyph; int x, y; char prop; std::string props;
   while (in >> c) {
     glyph = c;
     in >> entcontroller;
@@ -153,10 +153,11 @@ static Game* Game::loadGame(std::istream &in) {
     in >> x; in >> y;
     Entity* ent = new Entity();
     Position pos = new Position(x, y);
-    ent->setPos(pos);
+    ent->setPosition(pos);
     ent->setGlyph(glyph);
     ent->setProperties(props);
     ent->setController(entcontroller);
+    //set proper controller here based on the character in properties
     g->addEntity(ent);
   }
   g->setMaze(gmaze);
