@@ -10,8 +10,8 @@
 
 #include <string>
 #include "position.h"
+#include "entitycontroller.h"
 
-class EntityController;
 
 // Class representing a game entity (hero, minotaur, inanimate object, etc.)
 // This class is *not* intended to have dervied classes.

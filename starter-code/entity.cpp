@@ -9,6 +9,7 @@
 #include "entitycontroller.h"
 #include <string>
 #include <cmath>
+#include "position.h"
 
 using std::string;
 
