@@ -11,6 +11,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "maze.h"
+#include "ui.h"
+#include "position.h"
+#include "entity.h"
+#include "gamerules.h"
+#include "textui.h"
 
 class Maze;
 class UI;
