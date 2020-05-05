@@ -16,6 +16,7 @@ enum class Direction {
   UP, DOWN, LEFT, RIGHT, NONE,
 };
 
+inline Direction operator++( Direction& x) { return x = (Direction)(((int)(x)+1));}
 // A Position object represents an x,y coordinate within a Maze.
 // Note that Position objects have value semantics (meaning that they
 // can be copied and assigned.)  Also note that Position objects

@@ -29,14 +29,14 @@ class GameRules;
 class Game {
 public:
   // Typedef to refer to a vector of pointers to Entity objects
-  typedef std::vector<Entity *> EntityVec;
+  typedef std::vector<Entity*> EntityVec;
 
 private:
   // TODO: add fields
   Maze* gmaze;
   UI* gui;
   GameRules* grules;
-  EntityVec* gents;
+  EntityVec gents;
   
   // disallow copy constructor and assignment operator
   Game(const Game &);
@@ -68,7 +68,7 @@ public:
 
   // Get a const reference to the Game object's internal vector
   // of pointers to Entity objects.
-  const EntityVec &getEntities() const;
+  const std::vector<Entity*> &getEntities() const;
 
   // Get a vector of pointers to Entity objects that have the
   // specified property. The vector could be empty if no Entity objects

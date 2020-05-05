@@ -6,6 +6,7 @@
 //nhayden2
 
 #include "game.h"
+#include "ecfactory.h"
 
 //constructor, destructor
 Game::Game() {
@@ -31,7 +32,7 @@ void Game::setGameRules(GameRules *gameRules) {
 
 //add an entity to the sequence of entities
 void Game::addEntity(Entity* entity) {
-  gents->push_back(entity);
+  gents.push_back(entity);
 }
 
 //helper function for getEntity at that takes a position and returns the type of entity at that position
@@ -48,17 +49,12 @@ Entity* Game::getEntityAt(const Position &pos) {
   //search the entities for the entity with the specified position
   //if not, return that there is no entity
   std::vector<Entity*>::const_iterator it;
-  for (it = this->gents->cbegin(); it != this->gents->cend(); ++it) {
+  for (it = this->gents.cbegin(); it != this->gents.cend(); ++it) {
     if ((*it)->getPosition() == pos) {
       return *it;
     }
   }
   return NULL;
-}
-
-//get the reference to the reference of pointers to entities
-const EntityVec& Game::getEntities() const {
-  return gents;
 }
 
 std::vector<Entity *> Game::getEntitiesWithProperty(char prop) const {
@@ -130,12 +126,14 @@ void Game::takeTurn(Entity* actor) {
   takeTurn(actor);
 }
 
-static Game* Game::loadGame(std::istream &in) {
+Game* Game::loadGame(std::istream &in) {
   //read in maze
   Maze* gmaze = Maze::read(in);
   if (gmaze == NULL) { return NULL; }
   Game* g = new Game();
   char c; char entcontroller; std::string glyph; int x, y; char prop; std::string props;
+  EntityControllerFactory *ecf;
+  ecf = ecf->getInstance();
   while (in >> c) {
     glyph = c;
     in >> entcontroller;
@@ -149,10 +147,17 @@ static Game* Game::loadGame(std::istream &in) {
     ent->setPosition(pos);
     ent->setGlyph(glyph);
     ent->setProperties(props);
-    ent->setController(entcontroller);
+    
+    EntityController * econtroller = ecf->createFromChar(entcontroller);
+    ent->setController(econtroller);
     //set proper controller here based on the character in properties
     g->addEntity(ent);
   }
   g->setMaze(gmaze);
   return g;
+}
+
+//get the reference to the reference of pointers to entities
+const std::vector<Entity*>& Game::getEntities() const {
+  return gents;
 }
