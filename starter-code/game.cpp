@@ -5,14 +5,7 @@
 //Noah Hayden
 //nhayden2
 
-//including needed classes
 #include "game.h"
-#include "maze.h"
-#include "ui.h"
-#include "position.h"
-#include "entity.h"
-#include "gamerules.h" 
-#include "textui.h"
 
 //constructor, destructor
 Game::Game() {
@@ -152,7 +145,7 @@ static Game* Game::loadGame(std::istream &in) {
     }
     in >> x; in >> y;
     Entity* ent = new Entity();
-    Position pos = new Position(x, y);
+    Position pos = Position(x, y);
     ent->setPosition(pos);
     ent->setGlyph(glyph);
     ent->setProperties(props);
