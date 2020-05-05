@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include "game.h"
+#include "basicgamerules.h"
+#include "textui.h"
 
 int main(int argc, char *argv[]) {
   const char *filename;
