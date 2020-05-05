@@ -5,7 +5,9 @@
 //Noah Hayden
 //nhayden2
 
-
+#include "maze.h"
+#include "game.h"
+#include "position.h"
 
 virtual bool allowMove(Game *game, Entity *actor, const Position &source, const Position &dest) const {
 
