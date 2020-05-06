@@ -61,11 +61,10 @@ std::vector<Entity *> Game::getEntitiesWithProperty(char prop) const {
   //look for entities with given properties and add to vector:
   std::vector<Entity*> ents;
   std::vector<Entity*>::const_iterator it;
-  while (it != ents.cend()) {
+  for (it = this->gents.cbegin(); it != this->gents.cend(); ++it) {
     if ((*it)->hasProperty(prop)) {
       ents.push_back(*it);
     }
-    it++;
   }
   return ents;
 }
@@ -118,12 +117,14 @@ void Game::takeTurn(Entity* actor) {
   Position source = actor->getPosition();
   Position dest = source.displace(mv);
   bool legality = grules->allowMove(this, actor, source, dest);
-  if (legality) {
+  if (!legality) {
     //enact move, otherwise ask for new move
-    grules->enactMove(this, actor, dest);
+    if (actor->getController()->isUser()) {
+      gui->displayMessage("Illegal Move", false);
+    }
+    takeTurn(actor);
   }
-  gui->displayMessage("Illegal Move", false);
-  takeTurn(actor);
+  grules->enactMove(this, actor, dest);
 }
 
 Game* Game::loadGame(std::istream &in) {
