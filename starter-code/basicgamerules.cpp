@@ -8,11 +8,14 @@
 #include "maze.h"
 #include "game.h"
 #include "position.h"
+#include "tile.h"
+#include <vector>
 
-virtual bool allowMove(Game *game, Entity *actor, const Position &source, const Position &dest) const {
+using std::vector; 
+bool allowMove(Game *game, Entity *actor, const Position &source, const Position &dest) {
 
 
-  Maze gameMaze = game -> getMaze();
+  Maze* gameMaze = game -> getMaze();
   
   //TODO
   //Allows move if:
@@ -21,9 +24,11 @@ virtual bool allowMove(Game *game, Entity *actor, const Position &source, const 
 
   //Check to make sure source and dest are adjacent
   bool oneJump = false; 
-  int moveDir;
+  Direction moveDir;
   
-  for (int dir = UP; dir != NONE; dir++) {
+
+
+  for(Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
     if (source.displace(dir) == dest) {
       oneJump = true;
       moveDir = dir; 
@@ -33,14 +38,14 @@ virtual bool allowMove(Game *game, Entity *actor, const Position &source, const 
     return false; 
   }
   
-
+  //
   //remember, a entity is a character; either a hero or minotaur
   //and a tile is a goal/wall/floor
   Entity * destEntity = game -> getEntityAt(dest);
-  Tile * destTile = game -> getTile(dest);
+  Tile * destTile = gameMaze -> getTile(dest);
   
   //if  dest position is unoccupied & dest tile is able to be moved on
-  if (destEntity == nullptr && destTile ->checkMoveResult(actor, source, dest) == ALLOW) {
+  if (destEntity == nullptr && destTile ->checkMoveOnto(actor, source, dest) == MoveResult::ALLOW) {
     return true; 
   }
   else if (destEntity -> hasProperty('v')) {
@@ -53,22 +58,21 @@ virtual bool allowMove(Game *game, Entity *actor, const Position &source, const 
 }
 
 
-virtual void enactMove(Game *game, Entity *actor, const Position &dest) const {
-
-  Maze* gameMaze = game -> getMaze();
+void enactMove(Game *game, Entity *actor, const Position &dest) {
   
   Position curPosition = actor -> getPosition(); 
   
   //find push direction
-  int moveDir; 
-  for (int dir = UP; dir != NONE; dir++) {
+  Direction moveDir;
+  
+  for (Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
     if (curPosition.displace(dir) == dest) {
 	moveDir = dir;
       }
   }
   
   Position adjacPos = curPosition.displace(moveDir); 
-  Entity adjacEnt = game -> getEntityAt(adjacPos);
+  Entity * adjacEnt = game -> getEntityAt(adjacPos);
   //if there is a moveable entity adjacent, move both entity and that property
   if (adjacEnt != nullptr) {
       adjacEnt ->setPosition(adjacPos.displace(moveDir)); 
@@ -80,17 +84,17 @@ virtual void enactMove(Game *game, Entity *actor, const Position &dest) const {
     }
 }
 
-virtual GameResult checkGameResult(Game *game) const {
-   
-  Maze* gameMaze = game -> getMaze();
-  
+GameResult checkGameResult(Game *game) {
+
+  Maze * gameMaze = game -> getMaze();
+
   vector<Entity *> heroes = game -> getEntitiesWithProperty('h');
   vector<Entity *> minies = game -> getEntitiesWithProperty('m');
   //If any entity with the “h” property has reached a Goal tile, it should return GameResult::HERO_WINS
   for(vector<Entity *>::iterator it = heroes.begin();
       it != heroes.end();
       ++it) {
-    if (gameMaze -> getTile(it -> getPosition()) ->isGoal()) {
+    if (gameMaze -> getTile((*it) -> getPosition()) ->isGoal()) {
       return GameResult::HERO_WINS; 
     } 
   }
@@ -102,7 +106,7 @@ virtual GameResult checkGameResult(Game *game) const {
     for(vector<Entity *>::iterator it2 = heroes.begin();
 	it2 != heroes.end();
 	++it2)
-      if (it -> getPosition() == it2 -> getPosition()) {
+      if ((*it) -> getPosition() == (*it2) -> getPosition()) {
 	return GameResult::HERO_LOSES;
       }
   }
