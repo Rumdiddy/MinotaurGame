@@ -60,9 +60,21 @@ void TextUI::render(Game* game) {
   int r = 0;
   while (r < rows) {
     while (c < cols) {
+      bool match = false;
+      //find if there is an entity on the tile
+      std::vector<Entity*> ents = game->getEntities();
       Position curPos = Position(c, r);
-      Tile* cur = gmaze->getTile(curPos);
-      cout << cur->getGlyph();
+      for (size_t i = 0; i < ents.size(); i++) {
+	//checking whether there is an entity occupying the tile
+	if (ents[i]->getPosition().getX() == curPos.getX() && ents[i]->getPosition().getY() == curPos.getY()) {
+	  cout << ents[i]->getGlyph();
+	  match = true;
+	}
+      }
+      if (match == false) {
+	Tile* cur = gmaze->getTile(curPos);
+	cout << cur->getGlyph();
+      }
       c++;
     }
     c = 0;
@@ -75,4 +87,4 @@ void TextUI::render(Game* game) {
     cout << m_msg << endl;
     m_msg.clear(); // clears msg field after printing
   }
-} // still needs to handle cases where two entities are occupying the same space
+}
