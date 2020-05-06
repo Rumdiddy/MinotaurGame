@@ -34,7 +34,7 @@ bool BasicGameRules::allowMove(Game *game, Entity *actor, const Position &source
   
 
 
-  for(Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
+  for(Direction dir = Direction::UP; dir <= Direction::NONE; ++dir) {
     if (source.displace(dir) == dest) {
       oneJump = true;
       moveDir = dir; 
@@ -70,10 +70,10 @@ void BasicGameRules::enactMove(Game *game, Entity *actor, const Position &dest) 
   
   //find push direction
   Direction moveDir;
-  
-  for (Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
+
+  for (Direction dir = Direction::UP; dir <= Direction::NONE; ++dir) {
     if (curPosition.displace(dir) == dest) {
-	moveDir = dir;
+	    moveDir = dir;
       }
   }
   

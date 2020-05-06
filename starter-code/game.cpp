@@ -9,6 +9,7 @@
 #include "ecfactory.h"
 #include <vector>
 #include <iostream>
+#include <utility>
 
 //constructor, destructor
 Game::Game() {
@@ -65,7 +66,7 @@ std::vector<Entity *> Game::getEntitiesWithProperty(char prop) {
   //for (std::vector<Entity*>::const_iterator it = gents.cbegin(); it != gents.cend(); ++it) {
   for (size_t i = 0; i < gents.size(); ++i) {
     if (gents[i]->hasProperty(prop)) {
-      ents1.emplace_back(gents[i]);
+      ents1.push_back(gents[i]);
     }
   }
   return ents1;
@@ -124,9 +125,10 @@ void Game::takeTurn(Entity* actor) {
     if (actor->getController()->isUser()) {
       gui->displayMessage("Illegal Move", false);
     }
-    takeTurn(actor);
+    //takeTurn(actor);
+  } else {
+    grules->enactMove(this, actor, dest);
   }
-  grules->enactMove(this, actor, dest);
 }
 
 Game* Game::loadGame(std::istream &in) {

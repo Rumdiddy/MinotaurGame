@@ -18,7 +18,6 @@ Entity::Entity() {
 }
 
 Entity::~Entity() {
-  delete mcontroller;
 }
 
 
