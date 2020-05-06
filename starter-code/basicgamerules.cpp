@@ -5,6 +5,7 @@
 //Noah Hayden
 //nhayden2
 
+#include "basicgamerules.h"
 #include "maze.h"
 #include "game.h"
 #include "position.h"
@@ -12,7 +13,12 @@
 #include <vector>
 
 using std::vector; 
-bool allowMove(Game *game, Entity *actor, const Position &source, const Position &dest) {
+
+BasicGameRules::BasicGameRules() { }
+
+BasicGameRules::~BasicGameRules() { }
+
+bool BasicGameRules::allowMove(Game *game, Entity *actor, const Position &source, const Position &dest) const {
 
 
   Maze* gameMaze = game -> getMaze();
@@ -58,7 +64,7 @@ bool allowMove(Game *game, Entity *actor, const Position &source, const Position
 }
 
 
-void enactMove(Game *game, Entity *actor, const Position &dest) {
+void BasicGameRules::enactMove(Game *game, Entity *actor, const Position &dest) const {
   
   Position curPosition = actor -> getPosition(); 
   
@@ -84,7 +90,7 @@ void enactMove(Game *game, Entity *actor, const Position &dest) {
     }
 }
 
-GameResult checkGameResult(Game *game) {
+GameResult BasicGameRules::checkGameResult(Game *game) const {
 
   Maze * gameMaze = game -> getMaze();
 
