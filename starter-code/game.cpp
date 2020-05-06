@@ -137,36 +137,22 @@ Game* Game::loadGame(std::ifstream &in) {
   Maze* gmaze = Maze::read(in);
   if (gmaze == NULL) { return NULL; }
   Game* g = new Game();
-  int cols = gmaze->getWidth();
-  //int rows = gmaze->getHeight();
-  char c; char entcontroller; std::string glyph; int x, y; std::string props;
+  
+  std::string reader; char entcontroller; std::string glyph; int x, y; std::string props;
   EntityControllerFactory *ecf;
   ecf = ecf->getInstance();
-  x = 0;
-  y = 0;
-  int count = 0;
-  in.clear();
-  in.seekg(0);
-  in >> x; in >> y;
-  while (in >> c) {
-    glyph = c;
-    in >> entcontroller;
-    x = count % cols;
-    y = count / cols;
-    count++;
-    
+  
+  while (in >> reader) {
+    glyph = reader[0];
+    entcontroller = reader[1];
+    props = reader.substr(2);
+
+    in >> x; in >> y;
     Entity* ent = new Entity();
     Position pos = Position(x, y);
     ent->setPosition(pos);
     ent->setGlyph(glyph);
-
-    if (glyph == "@") {
-      props = "@uh";
-      ent->setProperties(props);
-    } else if (glyph == "M") {
-      props = "Mcm";
-      ent->setProperties(props);
-    }
+    ent->setProperties(props);
     
     EntityController * econtroller = ecf->createFromChar(entcontroller);
     ent->setController(econtroller);

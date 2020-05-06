@@ -67,10 +67,12 @@ Maze* Maze::read(std::istream &in) {
   char c;
   TileFactory* factory = TileFactory::getInstance();
 
-  while (in >> c && count < width * height) {
-    Tile* insert = factory->TileFactory::createFromChar(c);
-    nmaze->mazeVec.push_back(insert);
-    count++;
+  while (count < width * height) {
+    if (in >> c) {
+      Tile* insert = factory->TileFactory::createFromChar(c);
+      nmaze->mazeVec.push_back(insert);
+      count++;
+    }
   }
 
   return nmaze;

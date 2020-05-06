@@ -58,15 +58,16 @@ void TextUI::render(Game* game) {
   int cols = gmaze->getWidth(); int rows = gmaze->getHeight();
   int c = 0;
   int r = 0;
-  while (c < cols) {
-    while (r < rows) {
+  while (r < rows) {
+    while (c < cols) {
       Position curPos = Position(c, r);
       Tile* cur = gmaze->getTile(curPos);
       cout << cur->getGlyph();
-      r++;
+      c++;
     }
+    c = 0;
     cout << endl;
-    c++;
+    r++;
   }
 
   //printing any UI messages and clearing the field
