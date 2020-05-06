@@ -7,6 +7,8 @@
 
 #include "game.h"
 #include "ecfactory.h"
+#include <vector>
+#include <iostream>
 
 //constructor, destructor
 Game::Game() {
@@ -57,17 +59,17 @@ Entity* Game::getEntityAt(const Position &pos) {
   return NULL;
 }
 
-std::vector<Entity *> Game::getEntitiesWithProperty(char prop) const {
+std::vector<Entity *> Game::getEntitiesWithProperty(char prop) {
   //look for entities with given properties and add to vector:
-  std::vector<Entity*> ents;
-  std::vector<Entity*>::const_iterator it;
-  for (it = this->gents.cbegin(); it != this->gents.cend(); ++it) {
-    if ((*it)->hasProperty(prop)) {
-      ents.push_back(*it);
+  std::vector<Entity *> ents1;
+  //for (std::vector<Entity*>::const_iterator it = gents.cbegin(); it != gents.cend(); ++it) {
+  for (size_t i = 0; i < gents.size(); ++i) {
+    if (gents[i]->hasProperty(prop)) {
+      ents1.emplace_back(gents[i]);
     }
   }
-  return ents;
-}
+  return ents1;
+}  
 
 Maze* Game::getMaze() {
   return gmaze;

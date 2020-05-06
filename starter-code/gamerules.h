@@ -9,6 +9,7 @@
 #define GAMERULES_H
 
 #include "game.h"
+
 class Entity;
 class Position;
 

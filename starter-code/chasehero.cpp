@@ -27,7 +27,6 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
   Position epos = entity->getPosition();
   Position startpos = epos;
   Maze * gmaze = game->getMaze();
-
   
   //Obtain positions of all heroes
   vector<Entity*> heroes = game->getEntitiesWithProperty('h');
@@ -74,7 +73,7 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
   
   if (lowestdist == -1) {
     return Direction::NONE;
-  } else if (lowestnomove < lowestdist) {
+  } else if (lowestnomove <= lowestdist) {
     return Direction::NONE;
   } else {
     return lowestdir;

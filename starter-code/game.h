@@ -73,7 +73,7 @@ public:
   // Get a vector of pointers to Entity objects that have the
   // specified property. The vector could be empty if no Entity objects
   // have the specified property.
-  std::vector<Entity *> getEntitiesWithProperty(char prop) const;
+  std::vector<Entity *> getEntitiesWithProperty(char prop);
 
   // Get the Maze object.
   Maze *getMaze();
