@@ -99,7 +99,7 @@ public:
 
   // Read initial Game data from the specified istream, and return
   // the resulting Game object.
-  static Game *loadGame(std::istream &in);
+  static Game *loadGame(std::ifstream &in);
 
 private:
   // Add your private member functions here...

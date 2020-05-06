@@ -12,6 +12,7 @@
 #include "game.h"
 #include "maze.h"
 #include "tile.h"
+#include "basicgamerules.h"
 
 using std::string; using std::vector;
 
@@ -27,6 +28,7 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
   Position epos = entity->getPosition();
   Position startpos = epos;
   Maze * gmaze = game->getMaze();
+  //GameRules * gr = game->getGameRules();
   
   //Obtain positions of all heroes
   vector<Entity*> heroes = game->getEntitiesWithProperty('h');
@@ -35,6 +37,7 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
     hpos.push_back((*it)->getPosition());
   }
 
+  //bool moveable;
   for(Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
 
     //Skip direction if not allowed
@@ -44,10 +47,10 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
     if (checkglyph[0] == '#') {
       continue;
     }
-
+    
     //Check for all heroes
     for (vector<Position>::iterator i = hpos.begin(); i != hpos.end(); ++i) {
-      int distance = epos.distanceFrom(*i);
+      int distance = dispos.distanceFrom(*i);
       if (lowestdist == -1) {
 	lowestdist = distance;
 	lowestdir = dir;

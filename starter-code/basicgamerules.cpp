@@ -94,8 +94,8 @@ GameResult BasicGameRules::checkGameResult(Game *game) const {
 
   Maze * gameMaze = game -> getMaze();
 
-  vector<Entity *> heroes = game -> getEntitiesWithProperty('h');
-  vector<Entity *> minies = game -> getEntitiesWithProperty('m');
+  vector<Entity *> heroes = game->getEntitiesWithProperty('h');
+  vector<Entity *> minies = game->getEntitiesWithProperty('m');
   //If any entity with the “h” property has reached a Goal tile, it should return GameResult::HERO_WINS
   for(vector<Entity *>::iterator it = heroes.begin();
       it != heroes.end();

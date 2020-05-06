@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <utility>
+#include <fstream>
 
 //constructor, destructor
 Game::Game() {
@@ -131,27 +132,41 @@ void Game::takeTurn(Entity* actor) {
   }
 }
 
-Game* Game::loadGame(std::istream &in) {
+Game* Game::loadGame(std::ifstream &in) {
   //read in maze
   Maze* gmaze = Maze::read(in);
   if (gmaze == NULL) { return NULL; }
   Game* g = new Game();
-  char c; char entcontroller; std::string glyph; int x, y; char prop; std::string props;
+  int cols = gmaze->getWidth();
+  //int rows = gmaze->getHeight();
+  char c; char entcontroller; std::string glyph; int x, y; std::string props;
   EntityControllerFactory *ecf;
   ecf = ecf->getInstance();
+  x = 0;
+  y = 0;
+  int count = 0;
+  in.clear();
+  in.seekg(0);
+  in >> x; in >> y;
   while (in >> c) {
     glyph = c;
     in >> entcontroller;
-    while (c != ' ') {
-      in >> prop;
-      props += prop;
-    }
-    in >> x; in >> y;
+    x = count % cols;
+    y = count / cols;
+    count++;
+    
     Entity* ent = new Entity();
     Position pos = Position(x, y);
     ent->setPosition(pos);
     ent->setGlyph(glyph);
-    ent->setProperties(props);
+
+    if (glyph == "@") {
+      props = "@uh";
+      ent->setProperties(props);
+    } else if (glyph == "M") {
+      props = "Mcm";
+      ent->setProperties(props);
+    }
     
     EntityController * econtroller = ecf->createFromChar(entcontroller);
     ent->setController(econtroller);

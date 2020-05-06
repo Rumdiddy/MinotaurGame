@@ -8,8 +8,12 @@
 #include "textui.h"
 #include <iostream>
 #include <string>
+#include "maze.h"
+#include "game.h"
+#include "tile.h"
 
 using std::cout; using std::endl;
+using std::cin;
 
 TextUI::TextUI() {
 
@@ -34,7 +38,7 @@ Direction TextUI::getMoveDirection() {
     choice = Direction::RIGHT; break;
   default:
     cout << "Unknown direction" << endl;
-    return TextUI::getMoveDirection()
+    return TextUI::getMoveDirection();
   }
   return choice;
 }
@@ -43,7 +47,7 @@ Direction TextUI::getMoveDirection() {
 // the render member function is called; if endgame parameter is
 // true, it will be the last message displayed because the game
 // is over 
-void TextUI::displayMessage(const std::string &msg, bool endgame) {
+void TextUI::displayMessage(const std::string &msg, bool) {
   m_msg = msg;
 }
 
@@ -52,17 +56,21 @@ void TextUI::render(Game* game) {
   //drawing the maze
   Maze* gmaze = game->getMaze();
   int cols = gmaze->getWidth(); int rows = gmaze->getHeight();
-  for (int c < cols) {
-    for (int r < rows) {
-      Position curPos = Position(cols, rows);
+  int c = 0;
+  int r = 0;
+  while (c < cols) {
+    while (r < rows) {
+      Position curPos = Position(c, r);
       Tile* cur = gmaze->getTile(curPos);
-      cout << cur->getGlyph;
+      cout << cur->getGlyph();
+      r++;
     }
     cout << endl;
+    c++;
   }
 
   //printing any UI messages and clearing the field
-  if (m_msg != "") {
+  if(m_msg != "") {
     cout << m_msg << endl;
     m_msg.clear(); // clears msg field after printing
   }

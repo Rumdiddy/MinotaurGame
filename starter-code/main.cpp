@@ -5,6 +5,7 @@
 //Noah Hayden
 //nhayden2
 
+#include <fstream>
 #include <iostream>
 #include "game.h"
 #include "basicgamerules.h"
