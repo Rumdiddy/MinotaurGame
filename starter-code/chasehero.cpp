@@ -25,6 +25,7 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
   int lowestdist = -1;
   Direction lowestdir = Direction::NONE;
   Position epos = entity->getPosition();
+  Position startpos = epos;
   Maze * gmaze = game->getMaze();
 
   
@@ -56,11 +57,24 @@ Direction ChaseHero::getMoveDirection(Game *game, Entity *entity) {
 	lowestdir = dir;
       } else if ((distance == lowestdist) && ((dir == Direction::RIGHT) || (dir == Direction::LEFT))) {
 	lowestdir = dir;
-      }     
+      }      
+    }
+  }
+
+  int lowestnomove = -1;
+  int nomovedist;
+  for (vector<Position>::iterator jk = hpos.begin(); jk != hpos.end(); ++jk) {
+    nomovedist = startpos.distanceFrom(*jk);
+    if (lowestnomove == -1) {
+      lowestnomove = nomovedist;
+    } else if (lowestnomove > nomovedist) {
+      lowestnomove = nomovedist;
     }
   }
   
   if (lowestdist == -1) {
+    return Direction::NONE;
+  } else if (lowestnomove < lowestdist) {
     return Direction::NONE;
   } else {
     return lowestdir;
