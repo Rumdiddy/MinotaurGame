@@ -107,6 +107,7 @@ void Game::gameLoop() {
   GameResult result = grules->checkGameResult(this);
   msg = (result == GameResult::HERO_WINS) ? "Hero wins" : "Hero loses";
   gui->displayMessage(msg, true);
+  gui->render(this);
 }
 
 // Let specified actor Entity take a turn.
@@ -137,11 +138,12 @@ Game* Game::loadGame(std::ifstream &in) {
   Maze* gmaze = Maze::read(in);
   if (gmaze == NULL) { return NULL; }
   Game* g = new Game();
-  
+  int cols = gmaze->getWidth();
+  //int rows = gmaze->getHeight();
   std::string reader; char entcontroller; std::string glyph; int x, y; std::string props;
   EntityControllerFactory *ecf;
   ecf = ecf->getInstance();
-  
+
   while (in >> reader) {
     glyph = reader[0];
     entcontroller = reader[1];
