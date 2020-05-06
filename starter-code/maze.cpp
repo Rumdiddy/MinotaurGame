@@ -50,7 +50,7 @@ void Maze::setTile(const Position &pos, Tile *tile) {
 }
 
 //Gets tile at specified position
-const Tile* Maze::getTile(const Position & pos) const {
+Tile* Maze::getTile(const Position & pos) const {
   int p = pos.getX() + pos.getY() * mwidth;
   return mazeVec[p];
 }

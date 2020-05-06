@@ -9,8 +9,10 @@
 #include <iterator>
 #include <algorithm>
 #include <utility>
+#include <vector>
+#include "tile.h"
 
-using std::vector;
+using std::vector; using std::string; 
 
 AStarChaseHero::AStarChaseHero() {
 }
@@ -19,15 +21,12 @@ AStarChaseHero::~AStarChaseHero() {
 }
 
 Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
-  
   Maze * gmaze = game->getMaze();
   
-
-  
-  const vector<Entity*> heroes = game->getEntitiesWithProperty('h');
-  const vector<Position> hpos;
+  vector<Entity*> heroes = game->getEntitiesWithProperty('h');
+  vector<Position> hpos;
   for(vector<Entity*>::iterator it = heroes.begin(); it != heroes.end(); ++it) {
-    hpos.push_back(it->getPosition());
+    hpos.push_back((*it)->getPosition());
   }
 
   //min_pos
@@ -35,8 +34,8 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
 
   //Check if we start on hero
   for(vector<Position>::iterator iter = hpos.begin(); iter != hpos.end(); ++iter) {
-    if(startpos == iter) {
-      return NONE;
+    if(startpos == (*iter)) {
+      return Direction::NONE;
     }
   }
   
@@ -58,22 +57,22 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
 
     while(!goalfound) {  
       //Adds all the neighbors of current to openn
-      for(int dir = UP; dir != NONE; dir++) {
+      for(Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
 	const Position dispos  = currpos.displace(dir);
 	Tile * checkent = gmaze->getTile(dispos);
 	const string checkglyph = checkent->getGlyph();
-	if (checkglyph == '#') {
+	if (checkglyph[0] == '#') {
 	  continue;
 	}
 	
 	//Check if neighbor exists in openn and closed
-	for (vector<Position>::iterator i = openn.begin(); i != heroes.end(); ++i) {
-	  if (i == dispos) {
+	for (vector<Position>::iterator i = openn.begin(); i != openn.end(); ++i) {
+	  if ((*i) == dispos) {
 	    alrexis = true;
 	  }
 	}
 	for (vector<Position>::iterator j = closen.begin(); j != closen.end(); ++j) {
-	  if (j == dispos) {
+	  if ((*j) == dispos) {
 	    alrexis = true;
 	  }
 	}
@@ -83,21 +82,23 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
 
 	  checkent->setpos(dispos);
 	  checkent->setG(startpos);
-	  checkent->setH(hposi);
+	  checkent->setH(*hposi);
 	  
 	  //Sets parent as opposite direction
 	  switch(dir) {
-	  case 1: //UP
-	    checkent->setPPos(DOWN);
+	  case Direction::UP: //UP
+	    checkent->setPPos(Direction::DOWN);
 	    break;
-	  case 2: //DOWN
-	    checkent->setPPos(UP);
+	  case Direction::DOWN: //DOWN
+	    checkent->setPPos(Direction::UP);
 	    break;
-	  case 3: //LEFT
-	    checkent->setPPos(RIGHT);
+	  case Direction::LEFT: //LEFT
+	    checkent->setPPos(Direction::RIGHT);
 	    break;
-	  case 4: //RIGHT
-	    checkent->setPPos(LEFT);
+	  case Direction::RIGHT: //RIGHT
+	    checkent->setPPos(Direction::LEFT);
+	    break;
+	  case Direction::NONE:
 	    break;
 	  }
 	} else if (alrexis) {
@@ -113,32 +114,37 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
       
       //Choose next current with lowest F (loop through all of open)
       for(vector<Position>::iterator h = openn.begin(); h != openn.end(); ++h) {
-	Tile * checkt = gmaze->getTile(h);
+	Tile * checkt = gmaze->getTile(*h);
 	fval = checkt->getF();
 	
 	//choose tile with lowest F
-	if (lowestf = -1) {
+	if (lowestf == -1) {
 	  lowestf = fval;
-	  currpos = h;
+	  currpos = (*h);
 	} else if (fval < lowestf) {
 	  lowestf = fval;
-	  currpos = h;
+	  currpos = (*h);
 	}
       }
       current = gmaze->getTile(currpos);
       
       //If current is goal set isgoal to true
-      if(currpos == hposi) {
+      if(currpos == (*hposi)) {
 	goalfound = true;
       }
     }
   
     //Create loop to backtrace from the isgoal tile through the parents to get direction
-    std::pair<int, Direction> p = tileTrace(gmaze, hposi, startpos, 0);
-    if (closedist = -1) {
+    std::pair<int, Direction> p = tileTrace(gmaze, (*hposi), startpos, 0);
+    if (closedist == -1) {
       closedist = p.first;
       closedir = p.second;
     } else if (p.first < closedist) {
+      closedist = p.first;
+      closedir = p.second;
+    }
+    //horizontal precedence over vertical movement
+    if ((p.first == closedist) && ((p.second == Direction::RIGHT) || (p.second == Direction::LEFT))) {
       closedist = p.first;
       closedir = p.second;
     }
@@ -158,21 +164,22 @@ std::pair<int, Direction> AStarChaseHero::tileTrace(Maze *gamemaze, Position til
   Direction pdir;
   Tile * curr = gamemaze->getTile(tilepos);
   Position prevpos = curr->getPPos();
-  Tile * par = gamemaze->getTile(prevpos);
   pdir = curr->getPDir();
   if (prevpos == start) {
     switch(pdir) {
-    case 1: //UP
-      return std::make_pair(distance, DOWN);
+    case Direction::UP: //UP
+      return std::make_pair(distance, Direction::DOWN);
       break;
-    case 2: //DOWN
-      return std::make_pair(distance, UP);
+    case Direction::DOWN: //DOWN
+      return std::make_pair(distance, Direction::UP);
       break;
-    case 3: //LEFT
-      return std::make_pair(distance, RIGHT);
+    case Direction::LEFT: //LEFT
+      return std::make_pair(distance, Direction::RIGHT);
       break;
-    case 4: //RIGHT
-      return std::make_pair(distance, LEFT);
+    case Direction::RIGHT: //RIGHT
+      return std::make_pair(distance, Direction::LEFT);
+      break;
+    case Direction::NONE:
       break;
     }
   }

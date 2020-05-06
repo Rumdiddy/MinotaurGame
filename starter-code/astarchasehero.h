@@ -10,19 +10,23 @@
 #define ASTARCHASEHERO_H
 
 #include "entitycontroller.h"
+#include "maze.h"
+#include "position.h"
+#include "game.h"
+#include "maze.h"
 
 class AStarChaseHero : public EntityController {
 private:
   // copy constructor and assignment operator are disallowed
   AStarChaseHero(const AStarChaseHero &);
   AStarChaseHero &operator=(const AStarChaseHero &);
-  std::pair<int, Direction> tileTrace(Game *game, Position tilepos, Position start, int dist);
+  std::pair<int, Direction> tileTrace(Maze *gamemaze, Position tilepos, Position start, int dist);
   
 public:
   AStarChaseHero();
   virtual ~AStarChaseHero();
  
-  virtual Direction getMoveDirection(Maze *gamemaze, Entity *entity);
+  virtual Direction getMoveDirection(Game *game, Entity *entity);
   virtual bool isUser() const;
 };
 

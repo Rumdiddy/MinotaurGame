@@ -46,7 +46,7 @@ public:
   void setTile(const Position &pos, Tile *tile);
 
   // Get the Tile at the specified Position.
-  const Tile *getTile(const Position &pos) const;
+  Tile *getTile(const Position &pos) const;
 
   // Read a description of a Maze from specified istream, and return it.
   static Maze *read(std::istream &in);
