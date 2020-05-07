@@ -49,7 +49,14 @@ bool BasicGameRules::allowMove(Game *game, Entity *actor, const Position &source
   //and a tile is a goal/wall/floor
   Entity * destEntity = game -> getEntityAt(dest);
   Tile * destTile = gameMaze -> getTile(dest);
+  Entity * sent = game->getEntityAt(source);
   
+  if (destEntity != nullptr) {
+    if (destEntity->hasProperty('h') && sent->hasProperty('m')) {
+      return true;
+    }
+  }
+
   //if  dest position is unoccupied & dest tile is able to be moved on
   if (destEntity == nullptr && destTile ->checkMoveOnto(actor, source, dest) == MoveResult::ALLOW) {
     return true; 
@@ -83,13 +90,15 @@ void BasicGameRules::enactMove(Game *game, Entity *actor, const Position &dest) 
   Entity * adjacEnt = game -> getEntityAt(adjacPos);
   //if there is a moveable entity adjacent, move both entity and that property
   if (adjacEnt != nullptr) {
-      adjacEnt ->setPosition(adjacPos.displace(moveDir)); 
-      actor -> setPosition(dest); 
+    if (!(adjacEnt->hasProperty('h'))) {
+    adjacEnt ->setPosition(adjacPos.displace(moveDir)); 
+    actor -> setPosition(dest);
+    return;
     }
+  }
+  
   //else, just move the actor by 1 unit in the push direction
-  else {
-      actor -> setPosition(dest); 
-    }
+  actor -> setPosition(dest); 
 }
 
 GameResult BasicGameRules::checkGameResult(Game *game) const {
