@@ -58,17 +58,56 @@ void TextUI::render(Game* game) {
   int cols = gmaze->getWidth(); int rows = gmaze->getHeight();
   int c = 0;
   int r = 0;
+  GameRules * gr = game->getGameRules();
+  bool gamelost = false;
+  if (gr->checkGameResult(game) == GameResult::HERO_LOSES) {
+    gamelost = true;
+  }
+
+  std::vector<Entity*> aents = game->getEntitiesWithProperty('h');
+  std::vector<Entity*> mino = game->getEntitiesWithProperty('m');
+  Position losthero;
+  
+  if (gamelost) {
+    bool lostherofound = false;
+    for (std::vector<Entity*>::iterator iter = aents.begin(); iter != aents.end(); ++iter) {
+      for (std::vector<Entity*>::iterator iter2 = mino.begin(); iter2 != mino.end(); ++iter2) {
+	if ((*iter)->getPosition() == (*iter2)->getPosition()) {
+	  losthero = (*iter)->getPosition();
+	  lostherofound = true;
+	  break;
+	}
+      }
+      if (lostherofound) {
+	break;
+      }
+    }
+  }
+
+  
+
   while (r < rows) {
     while (c < cols) {
       bool match = false;
       //find if there is an entity on the tile
       std::vector<Entity*> ents = game->getEntities();
       Position curPos = Position(c, r);
-      for (size_t i = 0; i < ents.size(); i++) {
-	//checking whether there is an entity occupying the tile
-	if (ents[i]->getPosition().getX() == curPos.getX() && ents[i]->getPosition().getY() == curPos.getY()) {
-	  cout << ents[i]->getGlyph();
-	  match = true;
+
+      if (gamelost && (losthero == curPos)) {
+	for (std::vector<Entity*>::iterator iter3 = mino.begin(); iter3 != mino.end(); ++iter3) {
+	  if ((*iter3)->getPosition() == losthero && (*iter3)->getPosition() == curPos) {
+	    cout << (*iter3)->getGlyph();
+	    match = true;
+	  }
+	}
+      } else {
+	for (size_t i = 0; i < ents.size(); i++) {
+	  
+	  //checking whether there is an entity occupying the tile
+	  if (ents[i]->getPosition().getX() == curPos.getX() && ents[i]->getPosition().getY() == curPos.getY()) {
+	    cout << ents[i]->getGlyph();
+	    match = true;
+	  }
 	}
       }
       if (match == false) {
