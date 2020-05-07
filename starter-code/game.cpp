@@ -138,7 +138,7 @@ Game* Game::loadGame(std::ifstream &in) {
   Maze* gmaze = Maze::read(in);
   if (gmaze == NULL) { return NULL; }
   Game* g = new Game();
-  int cols = gmaze->getWidth();
+  //int cols = gmaze->getWidth();
   //int rows = gmaze->getHeight();
   std::string reader; char entcontroller; std::string glyph; int x, y; std::string props;
   EntityControllerFactory *ecf;

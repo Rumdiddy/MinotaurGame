@@ -54,9 +54,11 @@ bool BasicGameRules::allowMove(Game *game, Entity *actor, const Position &source
   if (destEntity == nullptr && destTile ->checkMoveOnto(actor, source, dest) == MoveResult::ALLOW) {
     return true; 
   }
-  else if (destEntity -> hasProperty('v')) {
-    if (game -> getEntityAt(dest.displace(moveDir)) ==nullptr) {
-      return true; 
+  if (destEntity != nullptr) {
+    if (destEntity -> hasProperty('v')) {
+      if (game -> getEntityAt(dest.displace(moveDir)) ==nullptr) {
+	return true; 
+      }
     }
   }
   //if above cases not reached, 
