@@ -1,0 +1,22 @@
+//Samuel Jin
+//sjin16
+//Ajay Ananthakrishnan
+//aananth3
+//Noah Hayden
+//nhayden2
+
+This was perhaps our hardest programming assignment so far but it has certainly been the most satisfying to finish. We have created this README to provide a brief description of how the project/program works and some challenging aspects.
+
+The project creates a maze/minotaur game in which a hero navigates through a maze and must run away from a minotaur. The hero is controlled via direcitonal keys from up, down, right, left (u, d, r, l), and a minotaur which is controlled by its entitycontroller (either chasehero algorithm or astarchasehero algorithm). The chasehero algorithm can be stuck while the astarchasehero determines the path and won't get stuck. The game is lost when the minotaur goes on top of the hero's position and the game is won when the hero reaches the goal object.
+
+Challenges:
+AStarChaseHero was certainly the hardest portion of this project. We spent many days learning about the algorithm itself and learning about how it works. It was extremely satisfying that the algorithm failed on the first test, but was fixed with one line change which meant we were (for the most part) programming without any errors.
+
+*IMPORTANT: PLEASE READ*
+*AStarChaseHero was interestingly implemented with the tiles as the nodes to store all the fcost, hcost, gcost, and other variables used in the A* algorithm. I understand that the tile classes were given and weren't supposed to be changed now, however, when I implemented it, this was the most intuitive method as I felt it was rather unelegant and redundant to create a separate node system to store the values I needed for the A* algorithm when the network of tiles could suffice. I have reached out to the instructors about this implementation and because I was time limited, I kept my implementation this way, modifying and adding to the tile.h and tile.cpp.*
+
+ChaseHero was perhaps the second hardest portion of this project. It helped us understand how pathfinding algorithms worked and definitely helped that we did this one first before astarchasehero.
+
+The third most hard, but perhaps the most annoying to figure out and debug was basicgamerules.cpp. There were many cases we had to think about and it was just rough because debugging was hard given that we often didn't even know that it might've originated from this or game.cpp.
+
+Enjoy the game!
