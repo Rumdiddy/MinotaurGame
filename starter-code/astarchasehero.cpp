@@ -59,6 +59,7 @@ Direction AStarChaseHero::getMoveDirection(Game *game, Entity *entity) {
       //Adds all the neighbors of current to openn
       for(Direction dir = Direction::UP; dir != Direction::NONE; ++dir) {
 	const Position dispos  = currpos.displace(dir);
+	lowestf = -1;
 	Tile * checkent = gmaze->getTile(dispos);
 	const string checkglyph = checkent->getGlyph();
 	if (checkglyph[0] == '#') {
